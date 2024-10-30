@@ -1,5 +1,5 @@
 public class Ticket {
-    private char[] id; // Max 4 digits/characters
+    protected char[] id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation

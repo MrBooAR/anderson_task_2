@@ -20,4 +20,15 @@ public class TicketService {
             ));
         }
     }
+
+    // Method to get a ticket by ID
+    public Ticket getTicketById(String id) {
+        for (Ticket ticket : tickets) {
+            if (new String(ticket.id).equals(id)) {
+                return ticket;
+            }
+        }
+        return null; // Return null if ticket is not found
+
+    }
 }
