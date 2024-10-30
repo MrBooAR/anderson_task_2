@@ -17,5 +17,12 @@ public class Main {
 
         TicketService ticketService = new TicketService();
 
+        // Retrieve a ticket by ID
+        Ticket ticket = ticketService.getTicketById("ID5");
+        if (ticket != null) {
+            System.out.println("Found Ticket: " + ticket);
+        } else {
+            System.out.println("Ticket not found.");
+        }
     }
 }
