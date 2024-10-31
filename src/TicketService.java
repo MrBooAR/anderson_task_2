@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TicketService {
     private List<Ticket> tickets;
@@ -31,4 +33,11 @@ public class TicketService {
         return null; // Return null if ticket is not found
 
     }
+
+    public List<Ticket> getTicketsByStudiuumSector(StadiumSector stadiumSector) {
+       return tickets.stream(ticket -> stadiumSector.equals(getTicketsByStudiuumSector()))
+                .collect(Collectors.toList());
+
+    }
+
 }
