@@ -4,7 +4,7 @@ public class Ticket {
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation
     private boolean isPromo; // Promo ticket or not
-    private char stadiumSector; // 'A' to 'C'
+    private StadiumSector stadiumSector; // 'A' to 'C'
     private double maxBackpackWeight; // Max allowed backpack weight in kg (with grams precision)
     private double price; // Price of the ticket
 
