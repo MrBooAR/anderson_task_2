@@ -4,13 +4,13 @@ public class Ticket {
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation
     private boolean isPromo; // Promo ticket or not
-    private char stadiumSector; // 'A' to 'C'
+    private StadiumSector stadiumSector; // 'A' to 'C'
     private double maxBackpackWeight; // Max allowed backpack weight in kg (with grams precision)
     private double price; // Price of the ticket
 
     // Constructor for full initialization
     public Ticket(char[] id, char[] concertHall, char[] eventCode, Long time,
-                  boolean isPromo, char stadiumSector, double maxBackpackWeight, double price) {
+                  boolean isPromo, StadiumSector stadiumSector, double maxBackpackWeight, double price) {
         this.id = id;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
@@ -28,7 +28,7 @@ public class Ticket {
         this.time = System.currentTimeMillis(); // Automatically sets to current time
         this.id = new char[4]; // default empty id
         this.isPromo = false; // default to non-promo
-        this.stadiumSector = ' '; // default sector
+//        this.stadiumSector = ' '; // default sector
         this.maxBackpackWeight = 0.0; // default weight
         this.price = 0.0; // Set price as provided
     }
@@ -40,7 +40,7 @@ public class Ticket {
         this.eventCode = new char[3]; // Default empty event code
         this.time = System.currentTimeMillis(); // Default to current time
         this.isPromo = false; // Default to non-promo
-        this.stadiumSector = ' '; // Default sector
+        this.stadiumSector = getStadiumSector(); // Default sector
         this.maxBackpackWeight = 0.0; // Default weight
         this.price = 0.0; // Default price
     }
@@ -57,6 +57,10 @@ public class Ticket {
                 ", maxBackpackWeight=" + maxBackpackWeight +
                 ", price=" + price +
                 '}';
+    }
+
+    public StadiumSector getStadiumSector() {
+        return stadiumSector;
     }
 }
 

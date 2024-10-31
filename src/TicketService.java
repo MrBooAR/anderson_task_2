@@ -34,10 +34,9 @@ public class TicketService {
 
     }
 
-    public List<Ticket> getTicketsByStudiumSector(StadiumSector stadiumSector) {
-       return tickets.stream(ticket -> stadiumSector.equals(getTicketsByStudiuumSector()))
+    public List<Ticket> getTicketsByStadiumSector(StadiumSector stadiumSector) {
+        return tickets.stream()
+                .filter(ticket -> stadiumSector.equals(ticket.getStadiumSector()))
                 .collect(Collectors.toList());
-
     }
-
 }
