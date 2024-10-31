@@ -1,18 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TicketService {
-    public static void main(String[] args) {
-        // Creating a full ticket with price
-        Ticket fullTicket = new Ticket("1234".toCharArray(), "Hall A".toCharArray(), "001".toCharArray(),
-                System.currentTimeMillis(), true, 'A', 7.505, 50.55);
+    private List<Ticket> tickets;
 
-        // Creating a limited ticket with price
-        Ticket limitedTicket = new Ticket("Hall B".toCharArray(), "002".toCharArray());
+    public TicketService() {
+        // Initialize the list with 10 tickets
+        tickets = new ArrayList<>(10);
+        for (int i = 0; i < 10; i++) {
+            tickets.add(new Ticket(
+                    ("ID" + i).toCharArray(),
+                    ("ConcertHall" + i).toCharArray(),
+                    ("E00" + i).toCharArray(),
+                    System.currentTimeMillis(),
+                    i % 2 == 0,    // Set promo true for even indexed tickets
+                    'A',
+                    5.0,
+                    20.0 + i
+            ));
+        }
+    }
 
-        // Creating an empty ticket (default price)
-        Ticket emptyTicket = new Ticket();
+    // Method to get a ticket by ID
+    public Ticket getTicketById(String id) {
+        for (Ticket ticket : tickets) {
+            if (new String(ticket.id).equals(id)) {
+                return ticket;
+            }
+        }
+        return null; // Return null if ticket is not found
 
-        // Displaying the tickets
-        System.out.println("Full Ticket: " + fullTicket);
-        System.out.println("Limited Ticket: " + limitedTicket);
-        System.out.println("Empty Ticket: " + emptyTicket);
     }
 }
