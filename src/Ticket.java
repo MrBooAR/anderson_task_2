@@ -1,4 +1,4 @@
-public class Ticket implements Identifiable, Printable {
+public class Ticket implements Modifiable, Printable {
     protected int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
@@ -51,8 +51,9 @@ public class Ticket implements Identifiable, Printable {
         System.out.println("Ticket Details: " + this);
     }
 
+    // Method to retrieve all field values as a String
     @Override
-    public String toString() {
+    public String getAllValues() {
         return "Ticket{" +
                 "id=" + id +
                 ", concertHall=" + new String(concertHall) +
@@ -66,6 +67,11 @@ public class Ticket implements Identifiable, Printable {
     }
 
     @Override
+    public String toString() {
+        return getAllValues();
+    }
+
+    @Override
     public int getId() {
         return id;
     }
@@ -73,6 +79,16 @@ public class Ticket implements Identifiable, Printable {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    @Override
+    public void setStadiumSector(char stadiumSector) {
+        this.stadiumSector = stadiumSector;
     }
 }
 
