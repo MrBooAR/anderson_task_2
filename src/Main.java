@@ -18,11 +18,20 @@ public class Main {
         TicketService ticketService = new TicketService();
 
         // Retrieve a ticket by ID
-        Ticket ticket = ticketService.getTicketById("ID5");
+        Ticket ticket = ticketService.getTicketById(String.valueOf(5));
         if (ticket != null) {
             System.out.println("Found Ticket: " + ticket);
         } else {
             System.out.println("Ticket not found.");
         }
+
+
+        // Modify allowed fields using TicketModifiable interface methods
+        fullTicket.setTime(System.currentTimeMillis() + 10000); // Update time
+        fullTicket.setStadiumSector('B'); // Update stadium sector
+
+        // Display all values using Valuable interface method
+        System.out.println("Updated Ticket Values: " + fullTicket.getAllValues());
+
     }
 }
