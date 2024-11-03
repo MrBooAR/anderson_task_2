@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         // Creating a full ticket with price
-        Ticket fullTicket = new Ticket("1234".toCharArray(), "Hall A".toCharArray(), "001".toCharArray(),
+        Ticket fullTicket = new Ticket(1234, "Hall A".toCharArray(), "001".toCharArray(),
                 System.currentTimeMillis(), true, 'A', 7.505, 50.55);
 
 // Creating a limited ticket with price

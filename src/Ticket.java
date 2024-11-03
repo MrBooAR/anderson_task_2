@@ -1,5 +1,5 @@
-public class Ticket {
-    protected char[] id; // Max 4 digits/characters
+public class Ticket implements Identifiable{
+    protected int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation
@@ -9,7 +9,7 @@ public class Ticket {
     private double price; // Price of the ticket
 
     // Constructor for full initialization
-    public Ticket(char[] id, char[] concertHall, char[] eventCode, Long time,
+    public Ticket(int id, char[] concertHall, char[] eventCode, Long time,
                   boolean isPromo, char stadiumSector, double maxBackpackWeight, double price) {
         this.id = id;
         this.concertHall = concertHall;
@@ -26,7 +26,7 @@ public class Ticket {
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = System.currentTimeMillis(); // Automatically sets to current time
-        this.id = new char[4]; // default empty id
+        this.id = 0; // default empty id
         this.isPromo = false; // default to non-promo
         this.stadiumSector = ' '; // default sector
         this.maxBackpackWeight = 0.0; // default weight
@@ -35,7 +35,7 @@ public class Ticket {
 
     // Constructor for creating an empty ticket
     public Ticket() {
-        this.id = new char[4]; // Default empty ID
+        this.id = 0; // Default empty ID
         this.concertHall = new char[10]; // Default empty concert hall
         this.eventCode = new char[3]; // Default empty event code
         this.time = System.currentTimeMillis(); // Default to current time
@@ -48,7 +48,7 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "id=" + new String(id) +
+                "id=" + new String(String.valueOf(id)) +
                 ", concertHall=" + new String(concertHall) +
                 ", eventCode=" + new String(eventCode) +
                 ", time=" + time +
@@ -57,6 +57,16 @@ public class Ticket {
                 ", maxBackpackWeight=" + maxBackpackWeight +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }
 

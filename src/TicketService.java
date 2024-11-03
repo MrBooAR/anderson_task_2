@@ -9,7 +9,7 @@ public class TicketService {
         tickets = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
             tickets.add(new Ticket(
-                    ("ID" + i).toCharArray(),
+                    i,
                     ("ConcertHall" + i).toCharArray(),
                     ("E00" + i).toCharArray(),
                     System.currentTimeMillis(),
@@ -24,7 +24,7 @@ public class TicketService {
     // Method to get a ticket by ID
     public Ticket getTicketById(String id) {
         for (Ticket ticket : tickets) {
-            if (new String(ticket.id).equals(id)) {
+            if (new String(String.valueOf(ticket.id)).equals(id)) {
                 return ticket;
             }
         }
