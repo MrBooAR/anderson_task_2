@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Ticket implements Modifiable, Printable {
     protected int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
@@ -69,6 +71,19 @@ public class Ticket implements Modifiable, Printable {
     @Override
     public String toString() {
         return getAllValues();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Check if the same object
+        if (obj == null || getClass() != obj.getClass()) return false; // Check for null and class match
+        Ticket ticket = (Ticket) obj; // Cast to Ticket
+        return id == ticket.id; // Compare IDs for equality
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Generate hash code based on ID
     }
 
     @Override
