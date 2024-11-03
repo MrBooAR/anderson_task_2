@@ -33,5 +33,12 @@ public class Main {
         // Display all values using Valuable interface method
         System.out.println("Updated Ticket Values: " + fullTicket.getAllValues());
 
+        Shareable shareByPhone = new ShareByPhone(ticket);
+        Shareable shareByEmail = new ShareByEmail(ticket);
+
+        // Sharing the ticket by different methods
+        shareByPhone.share(); // Calls the phone sharing method
+        shareByEmail.share(); // Calls the email sharing method
+
     }
 }
