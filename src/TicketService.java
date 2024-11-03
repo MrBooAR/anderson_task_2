@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketService {
-    private List<Ticket> tickets;
+    private final List<Ticket> tickets;
 
     public TicketService() {
         // Initialize the list with 10 tickets
@@ -24,7 +24,7 @@ public class TicketService {
     // Method to get a ticket by ID
     public Ticket getTicketById(String id) {
         for (Ticket ticket : tickets) {
-            if (new String(String.valueOf(ticket.id)).equals(id)) {
+            if (String.valueOf(ticket.id).equals(id)) {
                 return ticket;
             }
         }

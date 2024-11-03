@@ -1,4 +1,4 @@
-public class Ticket implements Identifiable{
+public class Ticket implements Identifiable, Printable {
     protected int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
@@ -45,10 +45,16 @@ public class Ticket implements Identifiable{
         this.price = 0.0; // Default price
     }
 
+    // Optionally override the default printContent method
+    @Override
+    public void printContent() {
+        System.out.println("Ticket Details: " + this);
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
-                "id=" + new String(String.valueOf(id)) +
+                "id=" + id +
                 ", concertHall=" + new String(concertHall) +
                 ", eventCode=" + new String(eventCode) +
                 ", time=" + time +
