@@ -24,7 +24,7 @@ public class TicketService {
     // Method to get a ticket by ID
     public Ticket getTicketById(String id) {
         for (Ticket ticket : tickets) {
-            if (String.valueOf(ticket.id).equals(id)) {
+            if (String.valueOf(ticket.getId()).equals(id)) {
                 return ticket;
             }
         }

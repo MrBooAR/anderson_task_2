@@ -1,7 +1,9 @@
 import java.util.Objects;
+import java.lang.reflect.Field;
 
 public class Ticket implements Modifiable, Printable {
-    protected int id; // Max 4 digits/characters
+    @NullableWarning
+    private int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation
@@ -45,8 +47,24 @@ public class Ticket implements Modifiable, Printable {
         this.stadiumSector = ' '; // Default sector
         this.maxBackpackWeight = 0.0; // Default weight
         this.price = 0.0; // Default price
+
+        //checkForNulls();
     }
 
+    private void checkForNulls() {
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(NullableWarning.class)) {
+                field.setAccessible(true);
+                try {
+                    if (field.getInt(this) == 0) { // Check if id is 0
+                        System.out.println("Variable [" + field.getName() + "] is null in [" + this.getClass().getSimpleName() + "]!");
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     // Optionally override the default printContent method
     @Override
     public void printContent() {
