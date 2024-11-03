@@ -40,5 +40,22 @@ public class Main {
         shareByPhone.share(); // Calls the phone sharing method
         shareByEmail.share(); // Calls the email sharing method
 
+        User[] users = new User[2]; // Array of User type
+
+        // Creating instances of Client and Admin
+        users[0] = new Client();
+        users[1] = new Admin();
+
+        // Iterate through users and call printRole
+        for (User user : users) {
+            user.printRole(); // Calls the overridden method based on the actual object type
+            // Call unique methods based on the instance type
+            if (user instanceof Client) {
+                ((Client) user).getTicket(ticket); // Client gets a ticket
+            } else if (user instanceof Admin) {
+                ((Admin) user).checkTicket(ticket); // Admin checks a ticket
+            }
+
+        }
     }
 }
