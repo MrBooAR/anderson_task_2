@@ -1,5 +1,9 @@
-public class Ticket {
-    protected char[] id; // Max 4 digits/characters
+import java.util.Objects;
+import java.lang.reflect.Field;
+
+public class Ticket implements Modifiable, Printable {
+    @NullableWarning
+    private int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
     private char[] eventCode; // 3 digits
     private long time; // Unix timestamp for ticket creation
@@ -9,7 +13,7 @@ public class Ticket {
     private double price; // Price of the ticket
 
     // Constructor for full initialization
-    public Ticket(char[] id, char[] concertHall, char[] eventCode, Long time,
+    public Ticket(int id, char[] concertHall, char[] eventCode, Long time,
                   boolean isPromo, char stadiumSector, double maxBackpackWeight, double price) {
         this.id = id;
         this.concertHall = concertHall;
@@ -26,7 +30,7 @@ public class Ticket {
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = System.currentTimeMillis(); // Automatically sets to current time
-        this.id = new char[4]; // default empty id
+        this.id = 0; // default empty id
         this.isPromo = false; // default to non-promo
         this.stadiumSector = ' '; // default sector
         this.maxBackpackWeight = 0.0; // default weight
@@ -35,7 +39,7 @@ public class Ticket {
 
     // Constructor for creating an empty ticket
     public Ticket() {
-        this.id = new char[4]; // Default empty ID
+        this.id = 0; // Default empty ID
         this.concertHall = new char[10]; // Default empty concert hall
         this.eventCode = new char[3]; // Default empty event code
         this.time = System.currentTimeMillis(); // Default to current time
@@ -43,12 +47,35 @@ public class Ticket {
         this.stadiumSector = ' '; // Default sector
         this.maxBackpackWeight = 0.0; // Default weight
         this.price = 0.0; // Default price
+
+        //checkForNulls();
     }
 
+    private void checkForNulls() {
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(NullableWarning.class)) {
+                field.setAccessible(true);
+                try {
+                    if (field.getInt(this) == 0) { // Check if id is 0
+                        System.out.println("Variable [" + field.getName() + "] is null in [" + this.getClass().getSimpleName() + "]!");
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    // Optionally override the default printContent method
     @Override
-    public String toString() {
+    public void printContent() {
+        System.out.println("Ticket Details: " + this);
+    }
+
+    // Method to retrieve all field values as a String
+    @Override
+    public String getAllValues() {
         return "Ticket{" +
-                "id=" + new String(id) +
+                "id=" + id +
                 ", concertHall=" + new String(concertHall) +
                 ", eventCode=" + new String(eventCode) +
                 ", time=" + time +
@@ -57,6 +84,44 @@ public class Ticket {
                 ", maxBackpackWeight=" + maxBackpackWeight +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public String toString() {
+        return getAllValues();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Check if the same object
+        if (obj == null || getClass() != obj.getClass()) return false; // Check for null and class match
+        Ticket ticket = (Ticket) obj; // Cast to Ticket
+        return id == ticket.id; // Compare IDs for equality
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Generate hash code based on ID
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    @Override
+    public void setStadiumSector(char stadiumSector) {
+        this.stadiumSector = stadiumSector;
     }
 }
 

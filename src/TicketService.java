@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketService {
-    private List<Ticket> tickets;
+    private final List<Ticket> tickets;
 
     public TicketService() {
         // Initialize the list with 10 tickets
         tickets = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
             tickets.add(new Ticket(
-                    ("ID" + i).toCharArray(),
+                    i,
                     ("ConcertHall" + i).toCharArray(),
                     ("E00" + i).toCharArray(),
                     System.currentTimeMillis(),
@@ -24,7 +24,7 @@ public class TicketService {
     // Method to get a ticket by ID
     public Ticket getTicketById(String id) {
         for (Ticket ticket : tickets) {
-            if (new String(ticket.id).equals(id)) {
+            if (String.valueOf(ticket.getId()).equals(id)) {
                 return ticket;
             }
         }
