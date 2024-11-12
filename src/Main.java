@@ -1,3 +1,8 @@
+import interfaceticket.Sender;
+import sending.SendByEmail;
+import sending.SendByPhone;
+import userANDticket.*;
+
 public class Main {
     public static void main(String[] args) {
         // Creating a full ticket with price
@@ -11,18 +16,18 @@ public class Main {
         Ticket emptyTicket = new Ticket();
 
 // Displaying the tickets
-        System.out.println("Full Ticket: " + fullTicket);
-        System.out.println("Limited Ticket: " + limitedTicket);
-        System.out.println("Empty Ticket: " + emptyTicket);
+        System.out.println("Full userANDticket.Ticket: " + fullTicket);
+        System.out.println("Limited userANDticket.Ticket: " + limitedTicket);
+        System.out.println("Empty userANDticket.Ticket: " + emptyTicket);
 
         TicketService ticketService = new TicketService();
 
         // Retrieve a ticket by ID
         Ticket ticket = ticketService.getTicketById(String.valueOf(5));
         if (ticket != null) {
-            System.out.println("Found Ticket: " + ticket);
+            System.out.println("Found userANDticket.Ticket: " + ticket);
         } else {
-            System.out.println("Ticket not found.");
+            System.out.println("userANDticket.Ticket not found.");
         }
 
 
@@ -31,18 +36,18 @@ public class Main {
         fullTicket.setStadiumSector('B'); // Update stadium sector
 
         // Display all values using Valuable interface method
-        System.out.println("Updated Ticket Values: " + fullTicket.getAllValues());
+        System.out.println("Updated userANDticket.Ticket Values: " + fullTicket);
 
-        Shareable shareByPhone = new ShareByPhone(ticket);
-        Shareable shareByEmail = new ShareByEmail(ticket);
+        // Using Senders
+        Sender sendByEmail = new SendByEmail();
+        Sender sendByPhone = new SendByPhone();
 
-        // Sharing the ticket by different methods
-        shareByPhone.share(); // Calls the phone sharing method
-        shareByEmail.share(); // Calls the email sharing method
+        sendByEmail.send(ticket); // Sending via email
+        sendByPhone.send(ticket); // Sending via phone
 
-        User[] users = new User[2]; // Array of User type
+        User[] users = new User[2]; // Array of userANDticket.User type
 
-        // Creating instances of Client and Admin
+        // Creating instances of userANDticket.Client and userANDticket.Admin
         users[0] = new Client();
         users[1] = new Admin();
 
@@ -51,9 +56,9 @@ public class Main {
             user.printRole(); // Calls the overridden method based on the actual object type
             // Call unique methods based on the instance type
             if (user instanceof Client) {
-                ((Client) user).getTicket(ticket); // Client gets a ticket
+                ((Client) user).getTicket(ticket); // userANDticket.Client gets a ticket
             } else if (user instanceof Admin) {
-                ((Admin) user).checkTicket(ticket); // Admin checks a ticket
+                ((Admin) user).checkTicket(ticket); // userANDticket.Admin checks a ticket
             }
 
         }

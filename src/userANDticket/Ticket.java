@@ -1,7 +1,13 @@
+package userANDticket;
+
+import exceptions.NullableWarning;
+import interfaceticket.Modifiable;
+import interfaceticket.Printable;
+import interfaceticket.Shareable;
 import java.util.Objects;
 import java.lang.reflect.Field;
 
-public class Ticket implements Modifiable, Printable {
+public class Ticket implements Modifiable, Printable, Shareable {
     @NullableWarning
     private int id; // Max 4 digits/characters
     private char[] concertHall; // Max 10 characters
@@ -34,7 +40,7 @@ public class Ticket implements Modifiable, Printable {
         this.isPromo = false; // default to non-promo
         this.stadiumSector = ' '; // default sector
         this.maxBackpackWeight = 0.0; // default weight
-        this.price = 0.0; // Set price as provided
+        this.price = 0.0; // Default price
     }
 
     // Constructor for creating an empty ticket
@@ -47,10 +53,9 @@ public class Ticket implements Modifiable, Printable {
         this.stadiumSector = ' '; // Default sector
         this.maxBackpackWeight = 0.0; // Default weight
         this.price = 0.0; // Default price
-
-        //checkForNulls();
     }
 
+    // Check for nullable fields
     private void checkForNulls() {
         for (Field field : this.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(NullableWarning.class)) {
@@ -65,16 +70,17 @@ public class Ticket implements Modifiable, Printable {
             }
         }
     }
-    // Optionally override the default printContent method
+
+    // Override printContent method
     @Override
     public void printContent() {
-        System.out.println("Ticket Details: " + this);
+        System.out.println(this); // Use toString directly
     }
 
-    // Method to retrieve all field values as a String
+    // Simplified toString method for object representation
     @Override
-    public String getAllValues() {
-        return "Ticket{" +
+    public String toString() {
+        return "userANDticket.Ticket{" +
                 "id=" + id +
                 ", concertHall=" + new String(concertHall) +
                 ", eventCode=" + new String(eventCode) +
@@ -87,15 +93,10 @@ public class Ticket implements Modifiable, Printable {
     }
 
     @Override
-    public String toString() {
-        return getAllValues();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true; // Check if the same object
         if (obj == null || getClass() != obj.getClass()) return false; // Check for null and class match
-        Ticket ticket = (Ticket) obj; // Cast to Ticket
+        Ticket ticket = (Ticket) obj; // Cast to userANDticket.Ticket
         return id == ticket.id; // Compare IDs for equality
     }
 
@@ -124,4 +125,3 @@ public class Ticket implements Modifiable, Printable {
         this.stadiumSector = stadiumSector;
     }
 }
-
