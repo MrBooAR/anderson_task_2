@@ -1,3 +1,7 @@
+package service;
+
+import model.Ticket;
+
 import java.util.ArrayList;
 import java.util.List;
 
