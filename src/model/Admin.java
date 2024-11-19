@@ -1,4 +1,4 @@
-package userANDticket;
+package model;
 
 public class Admin extends User {
     @Override

@@ -1,30 +1,29 @@
-package userANDticket;
+package model;
 
 import exceptions.NullableWarning;
-import interfaceticket.Modifiable;
-import interfaceticket.Printable;
-import interfaceticket.Shareable;
-import java.util.Objects;
+import interface_package.Printable;
+import interface_package.sending.Shareable;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
-public class Ticket implements Modifiable, Printable, Shareable {
+public class Ticket implements Printable, Shareable {
     @NullableWarning
-    private int id; // Max 4 digits/characters
+    private int id; // Max 4 digits
     private char[] concertHall; // Max 10 characters
-    private char[] eventCode; // 3 digits
+    private char[] eventCode; // Max 3 characters
     private long time; // Unix timestamp for ticket creation
     private boolean isPromo; // Promo ticket or not
     private char stadiumSector; // 'A' to 'C'
-    private double maxBackpackWeight; // Max allowed backpack weight in kg (with grams precision)
-    private double price; // Price of the ticket
+    private double maxBackpackWeight; // Backpack weight in kg (with gram precision)
+    private double price; // Ticket price
 
     // Constructor for full initialization
     public Ticket(int id, char[] concertHall, char[] eventCode, Long time,
                   boolean isPromo, char stadiumSector, double maxBackpackWeight, double price) {
         this.id = id;
-        this.concertHall = concertHall;
-        this.eventCode = eventCode;
-        this.time = (time != null) ? time : System.currentTimeMillis(); // Set current time if no time is given
+        this.concertHall = concertHall != null ? concertHall : new char[10];
+        this.eventCode = eventCode != null ? eventCode : new char[3];
+        this.time = (time != null) ? time : System.currentTimeMillis();
         this.isPromo = isPromo;
         this.stadiumSector = stadiumSector;
         this.maxBackpackWeight = maxBackpackWeight;
@@ -33,26 +32,12 @@ public class Ticket implements Modifiable, Printable, Shareable {
 
     // Constructor for limited initialization
     public Ticket(char[] concertHall, char[] eventCode) {
-        this.concertHall = concertHall;
-        this.eventCode = eventCode;
-        this.time = System.currentTimeMillis(); // Automatically sets to current time
-        this.id = 0; // default empty id
-        this.isPromo = false; // default to non-promo
-        this.stadiumSector = ' '; // default sector
-        this.maxBackpackWeight = 0.0; // default weight
-        this.price = 0.0; // Default price
+        this(0, concertHall, eventCode, null, false, ' ', 0.0, 0.0);
     }
 
-    // Constructor for creating an empty ticket
+    // Constructor for default ticket
     public Ticket() {
-        this.id = 0; // Default empty ID
-        this.concertHall = new char[10]; // Default empty concert hall
-        this.eventCode = new char[3]; // Default empty event code
-        this.time = System.currentTimeMillis(); // Default to current time
-        this.isPromo = false; // Default to non-promo
-        this.stadiumSector = ' '; // Default sector
-        this.maxBackpackWeight = 0.0; // Default weight
-        this.price = 0.0; // Default price
+        this(0, new char[10], new char[3], null, false, ' ', 0.0, 0.0);
     }
 
     // Check for nullable fields
@@ -61,7 +46,7 @@ public class Ticket implements Modifiable, Printable, Shareable {
             if (field.isAnnotationPresent(NullableWarning.class)) {
                 field.setAccessible(true);
                 try {
-                    if (field.getInt(this) == 0) { // Check if id is 0
+                    if (field.get(this) == null) {
                         System.out.println("Variable [" + field.getName() + "] is null in [" + this.getClass().getSimpleName() + "]!");
                     }
                 } catch (IllegalAccessException e) {
@@ -71,16 +56,19 @@ public class Ticket implements Modifiable, Printable, Shareable {
         }
     }
 
-    // Override printContent method
     @Override
     public void printContent() {
-        System.out.println(this); // Use toString directly
+        System.out.println(this);
     }
 
-    // Simplified toString method for object representation
+    @Override
+    public String getDetails() {
+        return toString();
+    }
+
     @Override
     public String toString() {
-        return "userANDticket.Ticket{" +
+        return "Ticket{" +
                 "id=" + id +
                 ", concertHall=" + new String(concertHall) +
                 ", eventCode=" + new String(eventCode) +
@@ -94,33 +82,30 @@ public class Ticket implements Modifiable, Printable, Shareable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Check if the same object
-        if (obj == null || getClass() != obj.getClass()) return false; // Check for null and class match
-        Ticket ticket = (Ticket) obj; // Cast to userANDticket.Ticket
-        return id == ticket.id; // Compare IDs for equality
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ticket ticket = (Ticket) obj;
+        return id == ticket.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Generate hash code based on ID
+        return Objects.hash(id);
     }
 
-    @Override
+    // Getters and Setters
     public int getId() {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
     public void setTime(long time) {
         this.time = time;
     }
 
-    @Override
     public void setStadiumSector(char stadiumSector) {
         this.stadiumSector = stadiumSector;
     }

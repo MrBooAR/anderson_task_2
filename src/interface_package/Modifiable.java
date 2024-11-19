@@ -1,4 +1,4 @@
-package interfaceticket;
+package interface_package;
 
 public interface Modifiable {
     int getId();         // Method to retrieve the ID
